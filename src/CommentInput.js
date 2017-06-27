@@ -3,40 +3,55 @@ import React, {Component} from 'react'
 class CommentInput extends Component {
   constructor () {
     super()
+    this.state = {
+      username: '',
+      content: ''
+    }
     this.onUserChange = this.onUserChange.bind(this)
     this.onTextChange = this.onTextChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
   }
 
   onUserChange (e) {
-    this.props.userChange(e.target.value)
+    this.setState({
+      username: e.target.value
+    })
   }
 
   onTextChange (e) {
-    this.props.textChange(e.target.value)
+    this.setState({
+      content: e.target.value
+    })
   }
 
   onSubmit (e) {
     e.preventDefault()
-    this.props.submitComment()
+    this.props.submitComment(this.state)
+    this.setState({content: ''})
   }
 
   render () {
     return (
-      <form className="input-wrapper">
-        <div>
-          <label>用户名：</label>
-          <input type="text" value={this.props.comment.username} 
+      <div className='comment-input'>
+        <div className='comment-field'>
+          <span className='comment-field-name'>用户名：</span>
+          <div className='comment-field-input'>
+            <input type="text" value={this.state.username} 
             onChange={this.onUserChange} />
+          </div>
         </div>
-        <div>
-          <label>评论内容：</label>
-          <textarea rows="5" onChange={this.onTextChange} 
-            value={this.props.comment.commentText}>
-        </textarea>
+        <div className='comment-field'>
+          <span className='comment-field-name'>评论内容：</span>
+          <div className='comment-field-input'>
+            <textarea rows="5" onChange={this.onTextChange} 
+            value={this.state.content}>
+          </textarea>
+          </div>
         </div>
-        <button type="submit" onClick={this.onSubmit}>发布</button>
-      </form>
+        <div className='comment-field-button'>
+          <button type="submit" onClick={this.onSubmit}>发布</button>
+        </div>
+      </div>
     )
   }
 }
