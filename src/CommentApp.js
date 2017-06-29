@@ -7,6 +7,34 @@ class CommentApp extends Component {
     super()
     this.state = { commentList: [] }
     this.submitComment = this.submitComment.bind(this)
+    this._loadComments = this._loadComments.bind(this)
+    this._saveComments = this._saveComments.bind(this)
+    this._deleteComment = this._deleteComment.bind(this)
+  }
+
+  // 载入评论列表
+  _loadComments () {
+    if (localStorage.comments) {
+      this.setState({commentList: JSON.parse(localStorage.comments)})
+    }
+  }
+
+  // 更新评论列表至localStorage
+  _saveComments (comments) {
+    localStorage.comments = JSON.stringify(comments)
+  }
+
+  componentWillMount () {
+    this._loadComments()
+  }
+
+  _deleteComment (index) {
+    this.setState(prevState => {
+      let comments = prevState.commentList.filter((item,i) => i !== index)
+      localStorage.comments = JSON.stringify(comments)
+      this._loadComments()
+      return {commentList: comments}
+    })
   }
 
   // 将编辑的comment推入列表
@@ -17,6 +45,7 @@ class CommentApp extends Component {
     this.setState(prevState => {
       let list = prevState.commentList
       list.push(comment)
+      this._saveComments(list)
       return { commentList: list }
     })
   }
@@ -25,7 +54,7 @@ class CommentApp extends Component {
     return (
       <div className="wrapper">
         <CommentInput submitComment={this.submitComment}/>
-        <CommentList commentList={this.state.commentList} />
+        <CommentList commentList={this.state.commentList} handleDelete={this._deleteComment} />
       </div>
     )
   }

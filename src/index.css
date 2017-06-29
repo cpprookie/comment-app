@@ -15,10 +15,11 @@ body {
 }
 
 /* 评论框样式 */
-.comment-field-input {
+.comment-input {
   background-color: #fff;
   border: 1px solid #f1f1f1;
   padding: 20px;
+  margin-bottom: 10px;
 }
 
 .comment-field {
@@ -75,6 +76,7 @@ body {
 }
 
 .comment {
+  position: relative;
   display: flex;
   border-bottom: 1px solid #f1f1f1;
   margin-bottom: 10px;
@@ -82,15 +84,36 @@ body {
   min-height: 50px;
 }
 
+.comment p {
+  margin: 0;
+}
+
 .comment .comment-user {
   flex-shrink: 0
 }
 
-.comment span {
+.comment-user {
   color: #00a3cf;
   font-style: italic;
 }
 
-.comment p {
-  margin: 0;
+.comment:hover .comment-delete {
+  color: #00a3cf;
+}
+
+.comment-delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: transparent;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.comment-createdtime {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 5px;
+  font-size: 12px;
 }
